@@ -1,0 +1,32 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#map-container {
+    background-color: grey;
+    height: 500px;
+    width: 100%;
+}
+
+h1 {
+    font-family: sans-serif;
+}
+
+h2 {
+    font-family: sans-serif;
+}
+
+
+
+/* used z-index to get text box to appear over map (and some help from ChatGPT here) */
+#textboxovermap {
+    position: absolute;
+    top: 20%;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    width: 250px;
+    border-radius: 8px;
+    z-index: 2;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+}
