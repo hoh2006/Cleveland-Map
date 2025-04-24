@@ -112,9 +112,9 @@ document.getElementById('close-button').addEventListener('click', () => {
     document.getElementById('firstpagecontent').classList.remove('hidden')
 });
 
-const marker1Position = [-81.69938, 41.50928]; // lakefront area
-const marker2Position = [-81.70439, 41.48445];
-const marker3Position = [-81.69543, 41.50863];
+// const marker1Position = [-81.69938, 41.50928]; // lakefront area
+// const marker2Position = [-81.70439, 41.48445];
+// const marker3Position = [-81.69543, 41.50863];
 
 
 // old code is all below
