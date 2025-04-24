@@ -4,7 +4,7 @@ const map = new mapboxgl.Map({
     container: 'map-container',
     style: 'mapbox://styles/mapbox/light-v11',
     projection: 'globe', // Display the map as a globe, since satellite-v9 defaults to Mercator
-    zoom: 12.5, // starting zoom
+    zoom: 10.5, // starting zoom
     center: [-81.69992, 41.49757],   // starting position [lng, lat],
     maxZoom: 24
     // bearing: 30,
@@ -41,6 +41,88 @@ map.on('load', () => {
         }
     });
 });
+
+// adding zoom in and out buttons
+const zoominout = new mapboxgl.NavigationControl({
+    showZoom: true,
+    showCompass: false,
+});
+
+// adding the actual buttons to the layout
+map.addControl(zoominout, 'bottom-right');
+
+const clevelandGeojsonUrl = './Cleveland_Boundary.json';
+// adding the geojson file to the map
+
+map.on('load', function () {
+    map.addSource('clevelandBoundary', {
+        type: 'geojson',
+        data: clevelandGeojsonUrl
+    });
+    // loading in the json data
+
+    map.addLayer({
+        id: 'boundsOfCleveland',
+        type: 'fill',
+        source: 'clevelandBoundary',
+        paint: {
+            'fill-color': 'steelblue',
+            'fill-opacity': 0.2
+        }
+    });
+});
+// adding the actual layer to the map itself
+
+const clevelandTifUrl = './Shore_to_Core_to_Shore_TIF_District.geojson'
+
+// adding the geojson file to the map
+
+map.on('load', function () {
+    map.addSource('clevelandTif', {
+        type: 'geojson',
+        data: clevelandTifUrl
+    });
+    // loading in the geojson data
+
+    map.addLayer({
+        id: 'ClevelandTif',
+        type: 'fill',
+        source: 'clevelandTif',
+        paint: {
+            'fill-color': 'orange',
+            'fill-opacity': 0.2
+        }
+    });
+});
+
+// flying to the TIF district when the button is clicked
+document.getElementById('next-button').addEventListener('click', () => {
+    map.flyTo({
+        center: [-81.69979, 41.50321],
+        zoom: 12.76,
+        duration: 1000
+    });
+    document.getElementById('tif-side-panel').classList.add('open');
+    // opening the side panel after the button is clicked
+    document.getElementById('firstpagecontent').classList.add('hidden');
+    // hiding the main content when the button is clicked
+});
+document.getElementById('close-button').addEventListener('click', () => {
+    document.getElementById('tif-side-panel').classList.remove('open');
+    document.getElementById('firstpagecontent').classList.remove('hidden')
+});
+
+const marker1Position = [-81.69938, 41.50928]; // lakefront area
+const marker2Position = [-81.70439, 41.48445];
+const marker3Position = [-81.69543, 41.50863];
+
+
+// old code is all below
+
+// map.on('load', function () {
+//     map.addControl(new mapboxgl.FullscreenControl(), 'top-right');
+// });
+// adding a fullscreen button to the map in the top right hand corner
 
 
 // loading in positions to use in a function later on
@@ -101,66 +183,6 @@ map.on('load', () => {
 
 // zoomToMarker();
 // experimenting with zoom to marker functionality
-
-// adding zoom in and out buttons
-const zoominout = new mapboxgl.NavigationControl({
-    showZoom: true,
-    showCompass: false,
-});
-
-// adding the actual buttons to the layout
-map.addControl(zoominout, 'bottom-right');
-
-const clevelandGeojsonUrl = './Cleveland_Boundary.json';
-// adding the geojson file to the map
-
-map.on('load', function () {
-    map.addSource('clevelandBoundary', {
-        type: 'geojson',
-        data: clevelandGeojsonUrl
-    });
-    // loading in the json data
-
-    map.addLayer({
-        id: 'boundsOfCleveland',
-        type: 'fill',
-        source: 'clevelandBoundary',
-        paint: {
-            'fill-color': 'steelblue',
-            'fill-opacity': 0.2
-        }
-    });
-});
-// adding the actual layer to the map itself
-
-const clevelandTifUrl = './Shore_to_Core_to_Shore_TIF_District.geojson'
-
-// adding the geojson file to the map
-
-map.on('load', function () {
-    map.addSource('clevelandTif', {
-        type: 'geojson',
-        data: clevelandTifUrl
-    });
-    // loading in the geojson data
-
-    map.addLayer({
-        id: 'ClevelandTif',
-        type: 'fill',
-        source: 'clevelandTif',
-        paint: {
-            'fill-color': 'orange',
-            'fill-opacity': 0.2
-        }
-    });
-});
-
-map.on('load', function () {
-    map.addControl(new mapboxgl.FullscreenControl(), 'top-right');
-});
-// adding a fullscreen button to the map in the top right hand corner
-
-
 
 
 
